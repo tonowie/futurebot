@@ -23,4 +23,4 @@ webhook.on("edited_message", (message: Message) => {
 });
 
 http.createServer(webhook.getWebhook())
-  .listen(80, () => console.log("listening"));
+  .listen(process.env.PORT || 3000, () => console.log("listening"));
