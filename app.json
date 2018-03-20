@@ -1,0 +1,7 @@
+{
+  "name": "pisoffbot",
+  "description": "pisoffbot",
+  "repository": "https://github.com/tonowie/pisoffbot.git",
+  "keywords": ["telegram", "bot"],
+  "image": "heroku/nodejs"
+}

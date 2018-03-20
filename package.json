@@ -1,0 +1,29 @@
+{
+  "name": "pisoffbot",
+  "version": "1.0.0",
+  "description": "Bot that will piss you off",
+  "main": "index.js",
+  "dependencies": {
+    "@types/node": "^9.4.7",
+    "api-telegram-bot": "^4.0.1",
+    "http": "0.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tonowie/pisoffbot.git"
+  },
+  "keywords": [
+    "telegram",
+    "bot"
+  ],
+  "author": "Tono",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tonowie/pisoffbot/issues"
+  },
+  "homepage": "https://github.com/tonowie/pisoffbot#readme"
+}
