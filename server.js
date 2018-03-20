@@ -1,4 +1,6 @@
 "use strict";
+// do not forget to register the webhook
+// curl -F "url=https://vast-fortress-52095.herokuapp.com" https://api.telegram.org/bot569089311:AAEfwFDBxB_GC-hrTL0aQMan9DsREefIwEo/setWebhook
 exports.__esModule = true;
 var http = require("http");
 var api_telegram_bot_1 = require("api-telegram-bot");
@@ -14,7 +16,7 @@ var webhook = new api_telegram_bot_1.Webhook(bot);
  * deleteMessage and banChatMember are not provided if message was received on private chats
  */
 webhook.on("text", function (message, actions) {
-    actions.reply("You sent: " + message.text);
+    actions.reply("\"" + message.text + "\" to you as well");
 });
 // NOTE: message actions are provided only for regex callbacks and subtypes of message events
 webhook.on("edited_message", function (message) {
