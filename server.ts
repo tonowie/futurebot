@@ -14,7 +14,7 @@ const webhook = new Webhook(bot);
  * deleteMessage and banChatMember are not provided if message was received on private chats
  */
 webhook.on("text", (message: Message, actions: MessageActions) => {
-  actions.reply(`You send: ${message.text}`);
+  actions.reply(`You sent: ${message.text}`);
 });
 
 // NOTE: message actions are provided only for regex callbacks and subtypes of message events
@@ -23,4 +23,4 @@ webhook.on("edited_message", (message: Message) => {
 });
 
 http.createServer(webhook.getWebhook())
-  .listen(3000, () => console.log("listening"));
+  .listen(80, () => console.log("listening"));
