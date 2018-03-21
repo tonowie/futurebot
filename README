@@ -1,0 +1,5 @@
+..publish new version
+git push heroku master
+
+..get logs from heroku
+c:\tono\software\Heroku\bin\heroku logs
