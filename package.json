@@ -8,7 +8,9 @@
     "api-telegram-bot": "^4.0.1",
     "http": "0.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/core-js": "^0.9.46"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"

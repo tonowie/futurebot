@@ -8,6 +8,7 @@ import { Message, MessageActions, TelegramBotClient, Webhook } from "api-telegra
 
 const bot = new TelegramBotClient(process.env.BOT_TOKEN);
 const webhook = new Webhook(bot);
+const badWords = new Set(["fuck", "bitch", "shit", "fucking", "fucker"]);
 
 /*
  * actions is an object with some shortcuts to manipulate received message:
@@ -18,7 +19,12 @@ const webhook = new Webhook(bot);
  * deleteMessage and banChatMember are not provided if message was received on private chats
  */
 webhook.on("text", (message: Message, actions: MessageActions) => {
-  actions.reply(`"${message.text}" to you as well`);
+  const words = new Set(message.text.split("[\s]"));
+  if (badWords.intersection(words).length > 0) {
+	  actions.reply("That is just what I thought... about you!");
+  } else {
+	  actions.reply(`"${message.text}" to you as well`);
+  }
 });
 
 // NOTE: message actions are provided only for regex callbacks and subtypes of message events
