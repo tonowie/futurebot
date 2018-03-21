@@ -28,7 +28,7 @@ function hasMatch(firstArray, secondArray) {
  * deleteMessage and banChatMember are not provided if message was received on private chats
  */
 webhook.on("text", function (message, actions) {
-    var words = message.text.split("[\s]");
+    var words = message.text.split(" ");
     if (hasMatch(badWords, words)) {
         actions.reply("That is just what I thought... about you!");
     }
