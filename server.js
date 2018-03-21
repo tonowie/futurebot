@@ -8,7 +8,17 @@ var http = require("http");
 var api_telegram_bot_1 = require("api-telegram-bot");
 var bot = new api_telegram_bot_1.TelegramBotClient(process.env.BOT_TOKEN);
 var webhook = new api_telegram_bot_1.Webhook(bot);
-var badWords = new Set(["fuck", "bitch", "shit", "fucking", "fucker"]);
+var badWords = ["fuck", "bitch", "shit", "fucking", "fucker"];
+function hasMatch(firstArray, secondArray) {
+    for (var i = 0; i < firstArray.length; i++) {
+        for (var j = 0; j < secondArray.length; j++) {
+            if (firstArray[i] == secondArray[j]) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 /*
  * actions is an object with some shortcuts to manipulate received message:
  *    banChatMember?: (until: number) => Promise<TelegramResponse<boolean>>
@@ -18,8 +28,8 @@ var badWords = new Set(["fuck", "bitch", "shit", "fucking", "fucker"]);
  * deleteMessage and banChatMember are not provided if message was received on private chats
  */
 webhook.on("text", function (message, actions) {
-    var words = new Set(message.text.split("[\s]"));
-    if (badWords.intersection(words).length > 0) {
+    var words = message.text.split("[\s]");
+    if (hasMatch(badWords, words)) {
         actions.reply("That is just what I thought... about you!");
     }
     else {
