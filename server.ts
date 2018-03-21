@@ -1,11 +1,12 @@
 // do not forget to register the webhook
 // curl -F "url=https://vast-fortress-52095.herokuapp.com" https://api.telegram.org/bot{bot token}/setWebhook
+// app now needs env variable with token
+// heroku config:set BOT_TOKEN={bot token}
 
 import http = require("http");
 import { Message, MessageActions, TelegramBotClient, Webhook } from "api-telegram-bot";
 
-const TOKEN = process.env.BOT_TOKEN;
-const bot = new TelegramBotClient(TOKEN);
+const bot = new TelegramBotClient(process.env.BOT_TOKEN);
 const webhook = new Webhook(bot);
 
 /*

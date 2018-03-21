@@ -1,11 +1,12 @@
 "use strict";
 // do not forget to register the webhook
-// curl -F "url=https://vast-fortress-52095.herokuapp.com" https://api.telegram.org/bot569089311:AAEfwFDBxB_GC-hrTL0aQMan9DsREefIwEo/setWebhook
+// curl -F "url=https://vast-fortress-52095.herokuapp.com" https://api.telegram.org/bot{bot token}/setWebhook
+// app now needs env variable with token
+// heroku config:set BOT_TOKEN={bot token}
 exports.__esModule = true;
 var http = require("http");
 var api_telegram_bot_1 = require("api-telegram-bot");
-var TOKEN = "569089311:AAEfwFDBxB_GC-hrTL0aQMan9DsREefIwEo";
-var bot = new api_telegram_bot_1.TelegramBotClient(TOKEN);
+var bot = new api_telegram_bot_1.TelegramBotClient(process.env.BOT_TOKEN);
 var webhook = new api_telegram_bot_1.Webhook(bot);
 /*
  * actions is an object with some shortcuts to manipulate received message:
