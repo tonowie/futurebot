@@ -8,17 +8,16 @@ import { Message, MessageActions, TelegramBotClient, Webhook } from "api-telegra
 
 const bot = new TelegramBotClient(process.env.BOT_TOKEN);
 const webhook = new Webhook(bot);
-const badWords = ["fuck", "bitch", "shit", "fucking", "fucker"];
+const cryptoWords = ["ETH", "BTC", "ether", "ethereum", "bitcoin"];
 
-function hasMatch(firstArray, secondArray) {
-	for (var i = 0; i < firstArray.length; i++) {
-		for (var j = 0; j < secondArray.length; j++) {
-			if (firstArray[i] == secondArray[j]) {
-				return true;
-			}
+function getMatch(words, sentence) {
+	for (var i = 0; i < words.length; i++) {
+		const word = words[i];
+		if (sentence.toLowerCase().split(word.toLowerCase()) >= 0) {
+			return word;
 		}
 	}
-    return false;
+  return null;
 }
 
 /*
@@ -30,11 +29,9 @@ function hasMatch(firstArray, secondArray) {
  * deleteMessage and banChatMember are not provided if message was received on private chats
  */
 webhook.on("text", (message: Message, actions: MessageActions) => {
-  const words = message.text.split(" ");
-  if (hasMatch(badWords, words)) {
-	  actions.reply("That is just what I thought... about you!");
-  } else {
-	  actions.reply(`"${message.text}" to you as well`);
+  const word = getMatch(cryptoWords, message.text);
+  if (word != null) {
+	  actions.reply(word + "? Is that still used? I must have travelled way too far back in time...");
   }
 });
 

@@ -1,7 +1,7 @@
 {
-  "name": "pisoffbot",
+  "name": "futurebot",
   "version": "1.0.0",
-  "description": "Bot that will piss you off",
+  "description": "Bot that will make fun of non-nem crypto",
   "main": "index.js",
   "dependencies": {
     "@types/node": "^9.4.7",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tonowie/pisoffbot.git"
+    "url": "git+https://github.com/tonowie/futurebot.git"
   },
   "keywords": [
     "telegram",
@@ -24,7 +24,7 @@
   "author": "Tono",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tonowie/pisoffbot/issues"
+    "url": "https://github.com/tonowie/futurebot/issues"
   },
-  "homepage": "https://github.com/tonowie/pisoffbot#readme"
+  "homepage": "https://github.com/tonowie/futurebot#readme"
 }

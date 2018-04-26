@@ -1,7 +1,7 @@
 {
-  "name": "pisoffbot",
-  "description": "pisoffbot",
-  "repository": "https://github.com/tonowie/pisoffbot.git",
+  "name": "futurebot",
+  "description": "futurebot",
+  "repository": "https://github.com/tonowie/futurebot.git",
   "keywords": ["telegram", "bot"],
   "image": "heroku/nodejs"
 }
