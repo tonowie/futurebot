@@ -1,3 +1,11 @@
+.BOT
+
+https://web.telegram.org and chat with @BotFather
+
+note down bot token and do not forget to set it to heroku VM
+
+.CODE
+
 ..initial setup
 heroku login
 heroku create
@@ -5,8 +13,17 @@ heroku create
 ..publish new version
 git push heroku master
 
-.. make sure one instance runs
+..make sure one instance runs
 heroku ps:scale web=1
+..define environment variables
+heroku config:set BOT_TOKEN={bot token}
 
 ..get logs from heroku
-c:\tono\software\Heroku\bin\heroku logs
+heroku logs
+
+..opne the app
+heroku open
+
+.WEBHOOK
+
+curl -F "url={app url}" https://api.telegram.org/bot{bot token}/setWebhook

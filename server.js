@@ -13,7 +13,10 @@ function getMatch(words, sentence) {
     for (var i = 0; i < words.length; i++) {
         var word = words[i];
         if (sentence.toLowerCase().split(word.toLowerCase()) >= 0) {
+            console.log("found word "+word);
             return word;
+        } else {
+            console.log("no match in: "+sentence);
         }
     }
     return null;
