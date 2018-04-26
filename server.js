@@ -8,7 +8,20 @@ var http = require("http");
 var api_telegram_bot_1 = require("api-telegram-bot");
 var bot = new api_telegram_bot_1.TelegramBotClient(process.env.BOT_TOKEN);
 var webhook = new api_telegram_bot_1.Webhook(bot);
-var cryptoWords = ["ETH", "BTC", "ether", "ethereum", "bitcoin"];
+var cryptoWords = ["ETH", "BTC", "ether", "ethereum", "bitcoin", "Ripple"];
+var answers = ["Is that still used? I must have travelled way too far back in time...",
+    "I think I remember that from history classes.",
+    "That was nice project back in the old days...",
+    "That's something Wright brothers used, isn't it?",
+    "People are still using that? Interesting."
+];
+/**
+ * Returns a random integer between min (inclusive) and max (inclusive)
+ * Using Math.round() will give you a non-uniform distribution!
+ */
+function getRandomInt(min, max) {
+    return Math.random() * (max - min) + min;
+}
 function getMatch(words, sentence) {
     sentence = sentence.toLowerCase();
     for (var i = 0; i < words.length; i++) {
@@ -30,7 +43,7 @@ function getMatch(words, sentence) {
 webhook.on("text", function (message, actions) {
     var word = getMatch(cryptoWords, message.text);
     if (word != null) {
-        actions.reply(word + "? Is that still used? I must have travelled way too far back in time...");
+        actions.reply("Did you mention " + word + "? " + answers[getRandomInt(0, answers.length)]);
     }
 });
 // NOTE: message actions are provided only for regex callbacks and subtypes of message events
