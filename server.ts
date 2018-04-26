@@ -11,9 +11,10 @@ const webhook = new Webhook(bot);
 const cryptoWords = ["ETH", "BTC", "ether", "ethereum", "bitcoin"];
 
 function getMatch(words, sentence) {
+	sentence = sentence.toLowerCase();
 	for (var i = 0; i < words.length; i++) {
 		const word = words[i];
-		if (sentence.toLowerCase().split(word.toLowerCase()) >= 0) {
+		if (sentence.indexOf(word.toLowerCase()) >= 0) {
 			return word;
 		}
 	}

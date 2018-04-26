@@ -10,13 +10,11 @@ var bot = new api_telegram_bot_1.TelegramBotClient(process.env.BOT_TOKEN);
 var webhook = new api_telegram_bot_1.Webhook(bot);
 var cryptoWords = ["ETH", "BTC", "ether", "ethereum", "bitcoin"];
 function getMatch(words, sentence) {
+    sentence = sentence.toLowerCase();
     for (var i = 0; i < words.length; i++) {
         var word = words[i];
-        if (sentence.toLowerCase().split(word.toLowerCase()) >= 0) {
-            console.log("found word "+word);
+        if (sentence.indexOf(word.toLowerCase()) >= 0) {
             return word;
-        } else {
-            console.log("no match in: "+sentence);
         }
     }
     return null;
