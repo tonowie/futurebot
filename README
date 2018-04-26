@@ -1,5 +1,12 @@
+..initial setup
+heroku login
+heroku create
+
 ..publish new version
 git push heroku master
+
+.. make sure one instance runs
+heroku ps:scale web=1
 
 ..get logs from heroku
 c:\tono\software\Heroku\bin\heroku logs

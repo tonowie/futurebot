@@ -8,16 +8,15 @@ var http = require("http");
 var api_telegram_bot_1 = require("api-telegram-bot");
 var bot = new api_telegram_bot_1.TelegramBotClient(process.env.BOT_TOKEN);
 var webhook = new api_telegram_bot_1.Webhook(bot);
-var badWords = ["fuck", "bitch", "shit", "fucking", "fucker"];
-function hasMatch(firstArray, secondArray) {
-    for (var i = 0; i < firstArray.length; i++) {
-        for (var j = 0; j < secondArray.length; j++) {
-            if (firstArray[i] == secondArray[j]) {
-                return true;
-            }
+var cryptoWords = ["ETH", "BTC", "ether", "ethereum", "bitcoin"];
+function getMatch(words, sentence) {
+    for (var i = 0; i < words.length; i++) {
+        var word = words[i];
+        if (sentence.toLowerCase().split(word.toLowerCase()) >= 0) {
+            return word;
         }
     }
-    return false;
+    return null;
 }
 /*
  * actions is an object with some shortcuts to manipulate received message:
@@ -28,12 +27,9 @@ function hasMatch(firstArray, secondArray) {
  * deleteMessage and banChatMember are not provided if message was received on private chats
  */
 webhook.on("text", function (message, actions) {
-    var words = message.text.split(" ");
-    if (hasMatch(badWords, words)) {
-        actions.reply("That is just what I thought... about you!");
-    }
-    else {
-        actions.reply("\"" + message.text + "\" to you as well");
+    var word = getMatch(cryptoWords, message.text);
+    if (word != null) {
+        actions.reply(word + "? Is that still used? I must have travelled way too far back in time...");
     }
 });
 // NOTE: message actions are provided only for regex callbacks and subtypes of message events
