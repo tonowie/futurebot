@@ -18,10 +18,10 @@ const answers = ["Is that still used? I must have travelled way too far back in 
 ];
 
 /**
- * Returns a random integer between min (inclusive) and max (exclusive)
+ * Returns a random integer between min (inclusive) and max (inclusive)
  */
 function getRandomInt(min, max) {
-	return Math.random() * (max - min) + min;
+	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function getMatch(words, sentence) {
@@ -46,7 +46,7 @@ function getMatch(words, sentence) {
 webhook.on("text", (message: Message, actions: MessageActions) => {
   const word = getMatch(cryptoWords, message.text);
   if (word != null) {
-		const index = getRandomInt(0, answers.length);
+		const index = getRandomInt(0, answers.length-1);
 		const answer = answers[index];
 		console.log("position "+index+" is "+answer);
 	  actions.reply("Did you mention " + word + "? " + answer);
