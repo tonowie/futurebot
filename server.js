@@ -16,8 +16,7 @@ var answers = ["Is that still used? I must have travelled way too far back in ti
     "People are still using that? Interesting."
 ];
 /**
- * Returns a random integer between min (inclusive) and max (inclusive)
- * Using Math.round() will give you a non-uniform distribution!
+ * Returns a random integer between min (inclusive) and max (exclusive)
  */
 function getRandomInt(min, max) {
     return Math.random() * (max - min) + min;
@@ -43,7 +42,10 @@ function getMatch(words, sentence) {
 webhook.on("text", function (message, actions) {
     var word = getMatch(cryptoWords, message.text);
     if (word != null) {
-        actions.reply("Did you mention " + word + "? " + answers[getRandomInt(0, answers.length)]);
+        var index = getRandomInt(0, answers.length);
+        var answer = answers[index];
+        console.log("position " + index + " is " + answer);
+        actions.reply("Did you mention " + word + "? " + answer);
     }
 });
 // NOTE: message actions are provided only for regex callbacks and subtypes of message events

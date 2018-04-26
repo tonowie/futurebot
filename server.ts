@@ -9,15 +9,16 @@ import { Message, MessageActions, TelegramBotClient, Webhook } from "api-telegra
 const bot = new TelegramBotClient(process.env.BOT_TOKEN);
 const webhook = new Webhook(bot);
 const cryptoWords = ["ETH", "BTC", "ether", "ethereum", "bitcoin","Ripple"];
+
 const answers = ["Is that still used? I must have travelled way too far back in time...",
 "I think I remember that from history classes.",
 "That was nice project back in the old days...",
 "That's something Wright brothers used, isn't it?",
 "People are still using that? Interesting."
 ];
+
 /**
- * Returns a random integer between min (inclusive) and max (inclusive)
- * Using Math.round() will give you a non-uniform distribution!
+ * Returns a random integer between min (inclusive) and max (exclusive)
  */
 function getRandomInt(min, max) {
 	return Math.random() * (max - min) + min;
@@ -45,7 +46,10 @@ function getMatch(words, sentence) {
 webhook.on("text", (message: Message, actions: MessageActions) => {
   const word = getMatch(cryptoWords, message.text);
   if (word != null) {
-	  actions.reply("Did you mention " + word + "? "+answers[getRandomInt(0, answers.length)]);
+		const index = getRandomInt(0, answers.length);
+		const answer = answers[index];
+		console.log("position "+index+" is "+answer);
+	  actions.reply("Did you mention " + word + "? " + answer);
   }
 });
 
