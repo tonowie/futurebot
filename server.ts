@@ -42,11 +42,12 @@ function getRandomInt(min, max) {
  * @param words 
  * @param sentence 
  */
-function getMatchWord(words, sentence) {
+function getMatchWord(words: string[], sentence: string) {
 	sentence = sentence.toLowerCase();
 	for (var i = 0; i < words.length; i++) {
 		const word = words[i];
-		if (sentence.indexOf(word.toLowerCase()) >= 0) {
+		var re = new RegExp("\\b"+word.toLowerCase()+"\\b");
+		if (re.test(sentence)) {
 			return word;
 		}
 	}
