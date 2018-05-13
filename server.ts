@@ -6,9 +6,11 @@
 import http = require("http");
 import { Message, MessageActions, TelegramBotClient, Webhook } from "api-telegram-bot";
 
+// create and init bot instance
 const bot = new TelegramBotClient(process.env.BOT_TOKEN);
 const webhook = new Webhook(bot);
 
+// mock data
 const mockChancePct = 70;
 const mockWords = ["ether", "ethereum", "bitcoin","Ripple", "ETH", "BTC"];
 const mockQuotes = [
@@ -16,14 +18,20 @@ const mockQuotes = [
 	"I think I remember that from history classes.",
 	"That was nice project back in the old days...",
 	"That's something Wright brothers used, isn't it?",
-	"People are still using that? Interesting."
+	"People are still using that? Interesting.",
+	"There was short period when it was quite popular.",
+	"Reminds me of something... not sure what though.",
+	"Grandma loved to talk about it. Never seen it used though...",
+	"Ah man, that was used waaay before my time."
 ];
 
+// praise data
 const praiseChancePct = 40;
 const praiseWords = ["NEM", "XEM", "ProximaX"];
 const praiseQuotes = [
 	"You already use that guys? It changed my life.",
-	"I see you already have it"
+	"I see you already have it. Awesome!",
+	"I came back here just to see it starting up."
 ];
 
 /**
@@ -32,29 +40,42 @@ const praiseQuotes = [
  * @param min minimum value inclusive
  * @param max maximum value inclusive
  */
-function getRandomInt(min, max) {
+function getRandomInt(min: number, max: number) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 /**
  * return word that was present in the sentence or null if none was found
  * 
- * @param words 
- * @param sentence 
+ * @param words array of recognized words
+ * @param sentence sentence to parse
  */
 function getMatchWord(words: string[], sentence: string) {
+	// go lowercase to make things simpler
 	sentence = sentence.toLowerCase();
+	// iterate over words and try to find each in the sentence
 	for (var i = 0; i < words.length; i++) {
 		const word = words[i];
+		// match using regular expression. \b is word boundary
 		var re = new RegExp("\\b"+word.toLowerCase()+"\\b");
 		if (re.test(sentence)) {
+			// return matched word
 			return word;
 		}
 	}
+	// return null when no match was found
   return null;
 }
 
-function getResponse(words, quotes, chance, sentence) {
+/**
+ * get response based on word recognition. Prefer to mock but some praise is fine as well
+ * 
+ * @param words array of recognized words
+ * @param quotes array of available quotes if word matches
+ * @param chance percentual chance that response will be provided
+ * @param sentence sentence to parse
+ */
+function getResponse(words: string[], quotes: string[], chance: number, sentence: string) {
 	// computing the chance is supereasy compared to finding the match so lets do that first
 	// chance of 0 is always true. chance of 100 is never true
 	if (getRandomInt(1, 100) > chance) {
@@ -62,12 +83,14 @@ function getResponse(words, quotes, chance, sentence) {
 		return null;
 	}
 	// now get the word
-  const word = getMatchWord(words, sentence);
+	const word = getMatchWord(words, sentence);
+	// if word was mateched then provide response
   if (word != null) {
 		const index = getRandomInt(0, quotes.length-1);
 		const answer = quotes[index];
 	  return "Did you mention " + word + "? " + answer;
 	}
+	// return null when no match was found
 	return null;
 }
 
