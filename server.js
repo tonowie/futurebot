@@ -8,26 +8,59 @@ var http = require("http");
 var api_telegram_bot_1 = require("api-telegram-bot");
 var bot = new api_telegram_bot_1.TelegramBotClient(process.env.BOT_TOKEN);
 var webhook = new api_telegram_bot_1.Webhook(bot);
-var cryptoWords = ["ETH", "BTC", "ether", "ethereum", "bitcoin", "Ripple"];
-var answers = ["Is that still used? I must have travelled way too far back in time...",
+var mockChancePct = 70;
+var mockWords = ["ether", "ethereum", "bitcoin", "Ripple", "ETH", "BTC"];
+var mockQuotes = [
+    "Is that still used? I must have travelled way too far back in time...",
     "I think I remember that from history classes.",
     "That was nice project back in the old days...",
     "That's something Wright brothers used, isn't it?",
     "People are still using that? Interesting."
 ];
+var praiseChancePct = 40;
+var praiseWords = ["NEM", "XEM", "ProximaX"];
+var praiseQuotes = [
+    "You already use that guys? It changed my life.",
+    "I see you already have it"
+];
 /**
  * Returns a random integer between min (inclusive) and max (inclusive)
+ *
+ * @param min minimum value inclusive
+ * @param max maximum value inclusive
  */
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-function getMatch(words, sentence) {
+/**
+ * return word that was present in the sentence or null if none was found
+ *
+ * @param words
+ * @param sentence
+ */
+function getMatchWord(words, sentence) {
     sentence = sentence.toLowerCase();
     for (var i = 0; i < words.length; i++) {
         var word = words[i];
         if (sentence.indexOf(word.toLowerCase()) >= 0) {
             return word;
         }
+    }
+    return null;
+}
+function getResponse(words, quotes, chance, sentence) {
+    // computing the chance is supereasy compared to finding the match so lets do that first
+    // chance of 0 is always true. chance of 100 is never true
+    if (getRandomInt(1, 100) > chance) {
+        // do nothing, bad luck
+        return null;
+    }
+    // now get the word
+    var word = getMatchWord(words, sentence);
+    if (word != null) {
+        var index = getRandomInt(0, quotes.length - 1);
+        var answer = quotes[index];
+        return "Did you mention " + word + "? " + answer;
     }
     return null;
 }
@@ -40,12 +73,15 @@ function getMatch(words, sentence) {
  * deleteMessage and banChatMember are not provided if message was received on private chats
  */
 webhook.on("text", function (message, actions) {
-    var word = getMatch(cryptoWords, message.text);
-    if (word != null) {
-        var index = getRandomInt(0, answers.length - 1);
-        var answer = answers[index];
-        console.log("position " + index + " is " + answer);
-        actions.reply("Did you mention " + word + "? " + answer);
+    // first try to mock as that is more fun
+    var response = getResponse(mockWords, mockQuotes, mockChancePct, message.text);
+    if (response == null) {
+        // if there is nothing to mock then see if we can at least praise
+        response = getResponse(praiseWords, praiseQuotes, praiseChancePct, message.text);
+    }
+    // return the response if any
+    if (response != null) {
+        actions.reply(response);
     }
 });
 // NOTE: message actions are provided only for regex callbacks and subtypes of message events

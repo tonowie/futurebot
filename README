@@ -10,7 +10,7 @@ note down bot token and do not forget to set it to heroku VM
 heroku login
 heroku create
 
-..publish new version
+..publish new version (commit and pust to master is already done)
 git push heroku master
 
 ..make sure one instance runs
