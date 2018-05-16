@@ -111,7 +111,7 @@ webhook.on("text", (message: Message, actions: MessageActions) => {
 	}
 	// return the response if any
   if (response != null) {
-	  actions.reply(response);
+	  actions.reply(response, {reply_to_message_id: message.message_id});
   }
 });
 

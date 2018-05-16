@@ -105,7 +105,7 @@ webhook.on("text", function (message, actions) {
     }
     // return the response if any
     if (response != null) {
-        actions.reply(response);
+        actions.reply(response, { reply_to_message_id: message.message_id });
     }
 });
 // NOTE: message actions are provided only for regex callbacks and subtypes of message events
